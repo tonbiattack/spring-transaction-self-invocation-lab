@@ -1,0 +1,65 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------< com.example:spring-transaction-self-invocation-lab >---------
+[INFO] Building spring-transaction-self-invocation-lab 1.0.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ spring-transaction-self-invocation-lab ---
+[INFO] skip non existing resourceDirectory /home/ubuntu/spring-transaction-self-invocation-lab/src/main/resources
+[INFO] skip non existing resourceDirectory /home/ubuntu/spring-transaction-self-invocation-lab/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.14.0:compile (default-compile) @ spring-transaction-self-invocation-lab ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ spring-transaction-self-invocation-lab ---
+[INFO] skip non existing resourceDirectory /home/ubuntu/spring-transaction-self-invocation-lab/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.14.0:testCompile (default-testCompile) @ spring-transaction-self-invocation-lab ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.5.3:test (default-test) @ spring-transaction-self-invocation-lab ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.transactionlab.BalanceAdjustmentServiceIntegrationTest
+12:57:37.489 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.transactionlab.BalanceAdjustmentServiceIntegrationTest]: BalanceAdjustmentServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:57:37.586 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.transactionlab.TransactionLabApplication for test class com.example.transactionlab.BalanceAdjustmentServiceIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+2026-08-16T12:57:37.949Z  INFO 2641 --- [           main] .BalanceAdjustmentServiceIntegrationTest : Starting BalanceAdjustmentServiceIntegrationTest using Java 21.0.11 with PID 2641 (started by ubuntu in /home/ubuntu/spring-transaction-self-invocation-lab)
+2026-08-16T12:57:37.951Z  INFO 2641 --- [           main] .BalanceAdjustmentServiceIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2026-08-16T12:57:38.459Z  INFO 2641 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-16T12:57:38.628Z  INFO 2641 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:13854ac4-c002-40b9-b83f-f171704a8708 user=SA
+2026-08-16T12:57:38.633Z  INFO 2641 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-16T12:57:38.803Z  INFO 2641 --- [           main] .BalanceAdjustmentServiceIntegrationTest : Started BalanceAdjustmentServiceIntegrationTest in 1.101 seconds (process running for 1.886)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.5/byte-buddy-agent-1.17.5.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-08-16T12:57:39.442Z  INFO 2641 --- [           main] c.e.t.TransactionalBalanceWriter         : transactionActive=true, savedBalance=125.00
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.115 s -- in com.example.transactionlab.BalanceAdjustmentServiceIntegrationTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.391 s
+[INFO] Finished at: 2026-08-16T12:57:39Z
+[INFO] ------------------------------------------------------------------------
