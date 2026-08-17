@@ -21,6 +21,8 @@
 | E002 | MyBatis のチェック例外に対する rollback rule | `transactionActive=true` でも、例外後の注文件数が `0` ではなく `1`。 | `rollbackFor = OrderRejectedException.class` を指定し、例外後の注文件数を `0` にする。 |
 | E003 | MyBatis の SESSION ローカルキャッシュと同一オブジェクト参照 | DBを書き換えていない表示用変更が、同一セッションの再検索結果にも現れ、`ACTIVE` が `DISPLAY_ONLY` になる。 | キャッシュスコープとオブジェクト変更の責務を分離し、再検索が新しい値を得る契約を守る。 |
 | E004 | MyBatis の `<foreach>` と空リスト | 空の選択IDで `WHERE product_id IN` だけが生成され、SQL構文エラーになる。 | 空選択を0件と定義し、`<choose>` で常に完全な条件を生成する。 |
+| E005 | MyBatis `selectOne` と最新1件のカーディナリティ | `ORDER BY` だけでは複数行が返り、`TooManyResultsException` になる。 | 最新1件の契約を `LIMIT 1` で SQL に明示する。 |
+| E006 | snake_case 列と camelCase プロパティの自動マッピング | 既定の `mapUnderscoreToCamelCase=false` では結果オブジェクトが null になる。 | 列エイリアスで Java プロパティ名を明示する。 |
 
 ## 必要な環境
 
