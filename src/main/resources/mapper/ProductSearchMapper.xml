@@ -11,9 +11,18 @@
     <select id="findByIds" resultMap="catalogProductMap">
         SELECT product_id, status
         FROM products
-        WHERE product_id IN
-        <foreach collection="productIds" item="productId" open="(" separator="," close=")">
-            #{productId}
-        </foreach>
+        <where>
+            <choose>
+                <when test="productIds != null and !productIds.isEmpty()">
+                    product_id IN
+                    <foreach collection="productIds" item="productId" open="(" separator="," close=")">
+                        #{productId}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 = 0
+                </otherwise>
+            </choose>
+        </where>
     </select>
 </mapper>
