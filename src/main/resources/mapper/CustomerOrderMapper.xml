@@ -4,9 +4,10 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.transactionlab.selectone.CustomerOrderMapper">
     <select id="findLatestByCustomerId" resultType="com.example.transactionlab.selectone.CustomerOrder">
-        SELECT order_id, customer_id, created_at, total_amount
+        SELECT order_id AS orderId, customer_id AS customerId, created_at AS createdAt, total_amount AS totalAmount
         FROM customer_orders
         WHERE customer_id = #{customerId}
         ORDER BY created_at DESC
+        LIMIT 1
     </select>
 </mapper>
