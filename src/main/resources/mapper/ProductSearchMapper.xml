@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.transactionlab.dynamicsql.ProductSearchMapper">
+    <resultMap id="catalogProductMap" type="com.example.transactionlab.dynamicsql.CatalogProduct">
+        <id property="productId" column="product_id"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="findByIds" resultMap="catalogProductMap">
+        SELECT product_id, status
+        FROM products
+        WHERE product_id IN
+        <foreach collection="productIds" item="productId" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </select>
+</mapper>
