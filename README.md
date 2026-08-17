@@ -18,6 +18,7 @@
 | ID | テーマ | バグ状態の観測 | 修正後に守る契約 |
 | --- | --- | --- | --- |
 | E001 | `@Transactional` の自己呼び出し | 例外後の残高が `100.00` ではなく `125.00`。ログは `transactionActive=false`。 | 例外後のDB再読込で残高は `100.00` のままである。 |
+| E002 | MyBatis のチェック例外に対する rollback rule | `transactionActive=true` でも、例外後の注文件数が `0` ではなく `1`。 | `rollbackFor = OrderRejectedException.class` を指定し、例外後の注文件数を `0` にする。 |
 
 ## 必要な環境
 
@@ -71,6 +72,7 @@ docs/
 Springの標準的なプロキシ方式では、外部からプロキシを経由して入る呼び出しだけが横断的処理の対象になります。そのため、同じ対象オブジェクト内での自己呼び出しでは、呼び出されたメソッドに `@Transactional` が付いていてもトランザクションが開始されません。[1] 本ラボはこの挙動を示す一点に限定しています。
 
 詳しい観測、競合仮説、最小修正の根拠は、[デバッグ記録](docs/debugging-record.md)を参照してください。
+E002 の観測、競合仮説、MyBatis mapper の確認、最小修正の根拠は、[チェック例外のデバッグ記録](docs/mybatis-checked-exception-debugging-record.md)を参照してください。
 
 ## References
 

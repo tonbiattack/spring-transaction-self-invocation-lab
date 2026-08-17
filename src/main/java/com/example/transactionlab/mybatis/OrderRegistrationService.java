@@ -16,7 +16,7 @@ public class OrderRegistrationService {
         this.orderMapper = orderMapper;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = OrderRejectedException.class)
     public void registerThenReject(String orderId) throws OrderRejectedException {
         orderMapper.insert(new OrderRecord(orderId, "PENDING"));
         log.info("mybatisInsert transactionActive={}, orderId={}",
