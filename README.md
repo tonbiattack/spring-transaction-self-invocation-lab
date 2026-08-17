@@ -19,6 +19,7 @@
 | --- | --- | --- | --- |
 | E001 | `@Transactional` の自己呼び出し | 例外後の残高が `100.00` ではなく `125.00`。ログは `transactionActive=false`。 | 例外後のDB再読込で残高は `100.00` のままである。 |
 | E002 | MyBatis のチェック例外に対する rollback rule | `transactionActive=true` でも、例外後の注文件数が `0` ではなく `1`。 | `rollbackFor = OrderRejectedException.class` を指定し、例外後の注文件数を `0` にする。 |
+| E003 | MyBatis の SESSION ローカルキャッシュと同一オブジェクト参照 | DBを書き換えていない表示用変更が、同一セッションの再検索結果にも現れ、`ACTIVE` が `DISPLAY_ONLY` になる。 | キャッシュスコープとオブジェクト変更の責務を分離し、再検索が新しい値を得る契約を守る。 |
 
 ## 必要な環境
 

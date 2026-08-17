@@ -2,3 +2,8 @@ CREATE TABLE IF NOT EXISTS orders (
     order_id VARCHAR(40) PRIMARY KEY,
     status VARCHAR(20) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS products (
+    product_id VARCHAR(40) PRIMARY KEY,
+    status VARCHAR(20) NOT NULL
+);
