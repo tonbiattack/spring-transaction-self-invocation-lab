@@ -11,7 +11,7 @@
 | 再現 | バグコミットで統合テストを実行する | 例外は発生するが、残高は `125.00` と永続化される |
 | 観測 | ログとデータベース再読込を確認する | `transactionActive=false` と `expected: 100.00 / but was: 125.00` |
 | 修正 | トランザクション付き処理を別Beanへ移す | Springのプロキシを経由して処理が呼ばれる |
-| 回帰防止 | 同一の統合テストを再実行する | 例外後のDB再読込で `100.00` が維持される |
+| 回帰防止 | 同一の統合テストとProxy境界テストを再実行する | 例外後のDB再読込で `100.00` が維持され、別BeanがAOP Proxyとして公開される |
 
 ## 収録済み教材
 
@@ -31,7 +31,7 @@
 | JDK | 21.0.11 |
 | Maven | 3.8.7 |
 | Spring Boot | 3.5.0 |
-| データベース | H2（インメモリ） |
+| データベース | H2（インメモリ、JDBC経由） |
 
 ## 修正後のテストを実行する
 
@@ -39,6 +39,9 @@
 
 ```bash
 mvn --batch-mode test
+
+# Proxy境界だけを確認する場合
+mvn --batch-mode -Dtest=TransactionProxyBoundaryIntegrationTest test
 ```
 
 ## バグを自分で再現する
@@ -64,19 +67,26 @@ src/main/java/com/example/transactionlab/
 ├── TransactionalBalanceWriter.java     # @Transactional を持つ別Bean
 └── AccountBalanceRepository.java       # H2への読み書き
 src/test/java/com/example/transactionlab/
-└── BalanceAdjustmentServiceIntegrationTest.java
+├── BalanceAdjustmentServiceIntegrationTest.java
+└── TransactionProxyBoundaryIntegrationTest.java
 
 docs/
 ├── topic-brief.md
 ├── debugging-record.md
+├── debugger-session.md
 ├── bug-state-test-output.log
 └── fixed-state-test-output.log
 ```
 
 Springの標準的なプロキシ方式では、外部からプロキシを経由して入る呼び出しだけが横断的処理の対象になります。そのため、同じ対象オブジェクト内での自己呼び出しでは、呼び出されたメソッドに `@Transactional` が付いていてもトランザクションが開始されません。[1] 本ラボはこの挙動を示す一点に限定しています。
 
-詳しい観測、競合仮説、最小修正の根拠は、[デバッグ記録](docs/debugging-record.md)を参照してください。
+詳しい観測、競合仮説、最小修正の根拠は、[デバッグ記録](docs/debugging-record.md)を参照してください。自己呼び出しの停止点、スタック、`TransactionSynchronizationManager`、別Beanへの経路を確認する手順は、[デバッガー記録](docs/debugger-session.md)にまとめています。
+
 E002 の観測、競合仮説、MyBatis mapper の確認、最小修正の根拠は、[チェック例外のデバッグ記録](docs/mybatis-checked-exception-debugging-record.md)を参照してください。
+
+## Testcontainersについて
+
+このリポジトリのE001は、外部コンテナが不要で決定的に失敗状態と修正状態を比較できるH2の統合テストを採用しています。2026-08-18の検証環境にはDockerデーモンが存在しなかったため、Testcontainersによる実DBテストは実行していません。実運用と同じDB製品固有のロック、分離レベル、SQL方言も検証したい場合は、同じ公開境界・最終状態アサーションを保ったままPostgreSQLまたはMySQLのTestcontainersプロファイルを追加してください。自己呼び出しがSpring Proxyを迂回するという本ラボの原因判定には、DB製品差ではなくトランザクション開始の有無と例外後の再読込が必要です。
 
 ## References
 
